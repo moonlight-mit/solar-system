@@ -737,12 +737,15 @@ if __name__ == "__main__":
         import io
         sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
     
+    # Get port from environment variable (for Render deployment)
+    port = int(os.environ.get("PORT", 9000))
+    host = os.environ.get("HOST", "127.0.0.1")
+    
     print("[*] Starting Solar System Physics Engine...")
-    print("[*] Server running at: http://127.0.0.1:9000")
+    print(f"[*] Server running at: http://{host}:{port}")
+    print(f"[*] API Documentation: http://{host}:{port}/docs")
+    
     uvicorn.run(
         app,
-        host="127.0.0.1",
-        port=9000,
-        log_level="info",
-        access_log=False
-    )
+        host=host,
+        port=port,
